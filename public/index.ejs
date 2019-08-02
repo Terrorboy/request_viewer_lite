@@ -1,0 +1,7 @@
+<%-include('wrap_header')%>
+	<% if(ejs.user == 'undefined') { %>
+		<%-include('login')%>
+	<% } else { %>
+		<%-include('log')%>
+	<% } %>
+<%-include('wrap_footer')%>

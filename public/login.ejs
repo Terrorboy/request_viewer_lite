@@ -1,0 +1,24 @@
+<div class="container">
+	<div class="row my-3 my-md-5 js_loger">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-status bg-red"></div>
+				<div class="card-body p-6 js_login">
+					<div class="form-group">
+						<label class="form-label">채널입력</label>
+						<form @submit="checkFrom">
+							<div class="row gutters-xs">
+								<div class="input-group">
+									<input type="text" class="form-control" v-model="channel" placeholder="채널이름">
+									<span class="input-group-append">
+										<button class="btn btn-primary" type="submit">Go!</button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

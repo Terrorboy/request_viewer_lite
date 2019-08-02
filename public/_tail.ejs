@@ -1,0 +1,107 @@
+	<script src="/js/jquery-3.2.1.min.js"></script>
+	<script src="/js/core.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/jquery.sparkline.min.js"></script>
+	<script src="/js/selectize.min.js"></script>
+	<script src="/js/jquery.tablesorter.min.js"></script>
+	<script src="/js/jquery-jvectormap-2.0.3.min.js"></script>
+	<script src="/js/jquery-jvectormap-de-merc.js"></script>
+	<script src="/js/jquery-jvectormap-world-mill.js"></script>
+	<script src="/js/circle-progress.min.js"></script>
+	<script src="/js/dashboard.js"></script>
+	<script src="/js/pasteimage.js"></script>
+	<script src="/js/vue.js"></script>
+	<script src="/js/jquery.json-view.min.js"></script>
+	<script src="/js/clipboard.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script>
+		var ejs = <%-JSON.stringify(ejs)%>;
+		<%
+		var ck = /^[A-Za-z0-9+]*$/;
+		var channel_trigger = true;
+		if(ejs.user == '') channel_trigger = false;
+		else if(ck.test(ejs.user) === false) channel_trigger = false;
+		else if(ejs.user.length > 10) channel_trigger = false;
+
+		if(channel_trigger === false) ejs.user = '__error__';
+		%>
+
+		<% if(ejs.user == '__error__') { %>
+			alert('채널 이름이 잘못되었습니다.');
+			location.href = '/';
+		<% } else if(ejs.user != 'undefined') { %>
+
+			var log = new Vue({
+				el: '.js_loger',
+				data: {
+					logs: []
+				},
+				mounted: function(e) {
+					$('.js_rendering').show();
+					$('.js_receive_addr').text(ejs._server.protocol+'://'+location.host+'/log/'+ejs.user)
+				}
+			});
+
+			var LogSocket = io('//'+location.host, {query: { user: ejs.user }});
+				LogSocket.on('connect', function() {
+					$('.js_connection').removeClass('bg-red').addClass('bg-green');
+				});
+				LogSocket.on('disconnect', function() {
+					$('.js_connection').removeClass('bg-green').addClass('bg-red');
+				});
+				LogSocket.on('log', function(data) {
+					var JData = JSON.parse(data);
+					var RData = JSON.stringify(JData.data);
+					var RTarget = document.createElement('div');
+					$(RTarget).jsonView(RData);
+					JData.data = $(RTarget).html();
+					log.$data.logs.push(JData);
+				});
+
+			var clipboard = new Clipboard('.js_php_copy');
+				clipboard.on('success', function(e) {
+					alert("복사되었습니다.");
+					e.clearSelection();
+				});
+
+		<% } else { %>
+
+			var log = new Vue({
+				el: '.js_login',
+				data: {
+					channel: ''
+				},
+				methods: {
+					checkFrom: function(e) {
+						e.preventDefault();
+
+						var trigger = true;
+						var channel = this.channel;
+						if(channel == '') {
+							alert('채널이름을 입력하세요.');
+							trigger = false;
+						}
+						else if(this.validateChannel(channel) === false) {
+							alert('채널이름은 영문 또는 숫자만 가능하며 공백을 허용하지 않습니다.');
+							trigger = false;
+						}
+						else if(channel.length > 10) {
+							alert('채널이름은 최대 10자까지만 사용가능합니다.');
+							trigger = false;
+						}
+
+
+						if(trigger === true) location.href = '/'+channel;
+					},
+					validateChannel: function(name) {
+						var ck = /^[A-Za-z0-9+]*$/;
+						return ck.test(name);
+					}
+				}
+			});
+
+		<% } %>
+	</script>
+</body>
+</html>
