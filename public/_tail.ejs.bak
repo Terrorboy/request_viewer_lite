@@ -18,7 +18,7 @@
 	<script>
 		var ejs = <%-JSON.stringify(ejs)%>;
 		<%
-		var ck = /^[A-Za-z0-9_\-+]*$/;
+		var ck = /^[A-Za-z0-9+]*$/;
 		var channel_trigger = true;
 		if(ejs.user == '') channel_trigger = false;
 		else if(ck.test(ejs.user) === false) channel_trigger = false;
@@ -39,12 +39,7 @@
 				},
 				mounted: function(e) {
 					$('.js_rendering').show();
-					$('.js_receive_addr').text(ejs._server.protocol+'://'+location.host+'/log/'+ejs.user);
-				},
-				watch: {
-					logs: function() {
-						$('.js_log_card:last-child').attr('tabindex', -1).focus();
-					}
+					$('.js_receive_addr').text(ejs._server.protocol+'://'+location.host+'/log/'+ejs.user)
 				}
 			});
 
@@ -100,7 +95,7 @@
 						if(trigger === true) location.href = '/'+channel;
 					},
 					validateChannel: function(name) {
-						var ck = /^[A-Za-z0-9_\-+]*$/;
+						var ck = /^[A-Za-z0-9+]*$/;
 						return ck.test(name);
 					}
 				}

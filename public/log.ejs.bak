@@ -62,7 +62,7 @@ post_curl_basic('https://z9n.net:7777/log/channel_id', array('a'=>1, 'B'=>2));
 					</div>
 
 					<div class="js_rendering" style="display: none;">
-						<div class="card my-md-2 js_log_card" v-for="(v, k) in logs">
+						<div class="card my-md-2" v-for="(v, k) in logs">
 							<div class="card-status card-status-left bg-blue"></div>
 							<div class="card-header">
 								<div class="card-title">

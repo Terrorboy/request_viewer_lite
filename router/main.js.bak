@@ -104,12 +104,6 @@ module.exports = function(name, server, io) {
 				var sendData = {sender: ip, date: date, data: data}
 				soc.in(user).emit('log', JSON.stringify(sendData));
 				return { result: true }
-			},
-			config: {
-				cors: {
-					origin: ['*'],
-					additionalHeaders: ['cache-control', 'x-requested-with']
-				}
 			}
 		},
 	])
