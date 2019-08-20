@@ -26,34 +26,13 @@
 								<div class="dimmer-content">
 									<div class="mb-md-7">
 										<h6>CURL</h6>
-										<code>curl -i -v -X POST <span class="js_receive_addr"></span> -d '{"msg":"test"}'</code>
+										<code>curl -X POST <span class="js_receive_addr"></span> -d '{"msg":"test"}'</code>
 									</div>
 
 									<div class="mb-md-7">
 										<h6>PHP</h6>
 										<div style="background: rgba(0, 0, 0, 0.025); border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 3px; padding: 3px; position: relative;">
 											<a href="#" class="js_php_copy" data-clipboard-target=".js_php"><img src="/img/carbon.png" alt=""></a>
-											<div style="position: absolute; top: 0;">
-												<textarea class="js_php" style="width:1px;height:1px;opacity:0;"><?php
-function post_curl_basic($url, $data=array()) {
-
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_POST, 1);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&'));
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-	curl_setopt($ch, CURLINFO_HEADER_OUT, false);
-	curl_setopt($ch, CURLOPT_HEADER, false);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-	$res = curl_exec($ch);
-	$hcode = curl_getinfo($ch);
-	curl_close($ch);
-}
-post_curl_basic('https://z9n.net:7777/log/channel_id', array('a'=>1, 'B'=>2));
-?></textarea>
-											</div>
 										</div>
 									</div>
 								</div>

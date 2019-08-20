@@ -40,11 +40,6 @@
 				mounted: function(e) {
 					$('.js_rendering').show();
 					$('.js_receive_addr').text(ejs._server.protocol+'://'+location.host+'/log/'+ejs.user);
-				},
-				watch: {
-					logs: function() {
-						$('.js_log_card:last-child').attr('tabindex', -1).focus();
-					}
 				}
 			});
 
@@ -59,9 +54,13 @@
 					var JData = JSON.parse(data);
 					var RData = JSON.stringify(JData.data);
 					var RTarget = document.createElement('div');
+					var Rlog = [];
 					$(RTarget).jsonView(RData);
 					JData.data = $(RTarget).html();
-					log.$data.logs.push(JData);
+
+					Rlog = log.$data.logs;
+					Rlog.unshift(JData);
+					log.$data.logs = Rlog;
 				});
 
 			var clipboard = new Clipboard('.js_php_copy');
@@ -96,7 +95,6 @@
 							trigger = false;
 						}
 
-
 						if(trigger === true) location.href = '/'+channel;
 					},
 					validateChannel: function(name) {
@@ -108,5 +106,26 @@
 
 		<% } %>
 	</script>
+	<div style="position: absolute; top: 0;">
+		<textarea class="js_php" style="width:1px;height:1px;opacity:0;"><?php
+function post_curl_basic($url, $data=array()) {
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data, '', '&'));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+	curl_setopt($ch, CURLINFO_HEADER_OUT, false);
+	curl_setopt($ch, CURLOPT_HEADER, false);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+	$res = curl_exec($ch);
+	$hcode = curl_getinfo($ch);
+	curl_close($ch);
+}
+post_curl_basic('https://z9n.net:7777/log/<%-ejs.user%>', array('a'=>1, 'B'=>2));
+?></textarea>
+	</div>
 </body>
 </html>
