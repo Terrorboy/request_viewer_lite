@@ -13,7 +13,6 @@
 	<script src="/js/vue.js"></script>
 	<script src="/js/jquery.json-view.min.js"></script>
 	<script src="/js/clipboard.min.js"></script>
-	<script src="/js/html2canvas.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 
 	<script>
@@ -69,23 +68,6 @@
 					alert("복사되었습니다.");
 					e.clearSelection();
 				});
-			
-			$(document).on('click', '[data-toggle="card-camera"]', function(e) {
-				html2canvas(this.closest('div.card')).then(canvas => {
-				    var saveName = 'z9n_'+ejs.user+'_'+$(this).closest('div.card').find('.card-title > .text-muted').text();
-				    var url = canvas.toDataURL('image/png');
-					var link = document.createElement('a');
-					link.setAttribute('href', url);
-					link.setAttribute('download', saveName+'.png');
-					link.setAttribute('target', '_blank');
-					link.style.display = 'none';
-					document.body.appendChild(link);
-					link.click();
-					document.body.removeChild(link);
-				});
-				e.preventDefault();
-				return false;
-			});
 
 		<% } else { %>
 
@@ -121,6 +103,7 @@
 					}
 				}
 			});
+
 		<% } %>
 	</script>
 	<div style="position: absolute; top: 0;">
@@ -141,7 +124,7 @@ function post_curl_basic($url, $data=array()) {
 	$hcode = curl_getinfo($ch);
 	curl_close($ch);
 }
-post_curl_basic('https://z9n.net:7777/log/<%-ejs.user%>', $_REQUEST);
+post_curl_basic('https://z9n.net:7777/log/<%-ejs.user%>', array('a'=>1, 'B'=>2));
 ?></textarea>
 	</div>
 </body>

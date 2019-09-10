@@ -46,11 +46,10 @@
 							<div class="card-header">
 								<div class="card-title">
 									<h3>{{v.sender}}</h3>
-									<small class="text-muted" style="margin: -.75rem 0 0;">{{v.method}} :: {{v.date}}</small>
+									<small class="text-muted" style="margin: -.75rem 0 0;">{{v.date}}</small>
 								</div>
 								<div class="card-options">
 									<a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-									<a href="#" class="card-options-camera" data-toggle="card-camera"><i class="fe fe-camera"></i></a>
 									<a href="#" class="card-options-maximize" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
 									<a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
 								</div>
