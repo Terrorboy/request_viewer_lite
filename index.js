@@ -5,12 +5,16 @@ const Hapi = require('hapi')
 const SocketIO = require('socket.io')
 
 var fs = require('fs')
+/*
 var options = {
 	  key: fs.readFileSync('/etc/letsencrypt/live/z9n.net/privkey.pem')
 	, cert: fs.readFileSync('/etc/letsencrypt/live/z9n.net/cert.pem')
 	, ca: fs.readFileSync('/etc/letsencrypt/live/z9n.net/chain.pem')
 }
 const server = Hapi.server({ port: 7777, tls: options })
+*/
+
+const server = Hapi.server({ port: 80 })
 
 const init = async () => {
 
