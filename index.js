@@ -14,7 +14,7 @@ var options = {
 const server = Hapi.server({ port: 7777, tls: options })
 */
 
-const server = Hapi.server({ port: 80 })
+const server = Hapi.server({ port: 7777 })
 
 const init = async () => {
 
